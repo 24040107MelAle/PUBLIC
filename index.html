@@ -8,9 +8,10 @@
     <!-- ICONOS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-    <!-- MAPA (Leaflet) -->
+    <!-- MAPA -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
+
 <body>
 
 <header>
@@ -24,37 +25,89 @@
         <h3><i class="fas fa-map-marker-alt"></i> Geolocalización</h3>
         <button onclick="obtenerUbicacion()">Obtener ubicación</button>
         <p id="ubicacion"></p>
-        <div id="mapa" style="height:200px; border-radius:10px;"></div>
+        <div id="mapa" style="height:200px;"></div>
     </div>
 
     <!-- REDES -->
     <div class="card">
-    <h3><i class="fas fa-users"></i> Noticias (tipo Facebook)</h3>
+        <h3><i class="fas fa-users"></i> Noticias</h3>
 
-    <select id="categoria" onchange="cargarPosts()">
-        <option value="space">Espacio</option>
-        <option value="tech">Tecnología</option>
-    </select>
+        <select id="categoria" onchange="cargarPosts()">
+            <option value="space">Espacio</option>
+            <option value="tech">Tecnología</option>
+        </select>
 
-    <button onclick="cargarPosts()">Actualizar</button>
+        <button onclick="cargarPosts()">Actualizar</button>
 
-    <div id="loaderPosts" class="loader hidden"></div>
-    <div id="posts"></div>
-</div>
+        <div id="loaderPosts" class="loader hidden"></div>
+        <div id="posts"></div>
+    </div>
 
     <!-- E-COMMERCE -->
     <div class="card">
-    <h3><i class="fas fa-shopping-cart"></i> E-commerce</h3>
+        <h3><i class="fas fa-shopping-cart"></i> E-commerce</h3>
 
-    <input type="text" id="producto" placeholder="Buscar producto">
-    <button onclick="buscarProducto()">Buscar</button>
+        <input type="text" id="producto" placeholder="Buscar producto">
+        <button onclick="buscarProducto()">Buscar</button>
 
-    <div id="loaderProductos" class="loader hidden"></div>
-    <div id="productos"></div>
+        <div id="loaderProductos" class="loader hidden"></div>
+        <div id="productos"></div>
+    </div>
+
+    <!-- BASE DE DATOS -->
+    <!-- BASE DE DATOS -->
+<div class="card">
+    <h3><i class="fas fa-database"></i> Base de Datos</h3>
+
+    <input type="text" id="nombreUsuario" placeholder="Nombre">
+    <input type="email" id="correoUsuario" placeholder="Correo">
+    <input type="number" id="edadUsuario" placeholder="Edad">
+
+    <button onclick="guardarUsuario()">Guardar</button>
+    <button onclick="cargarUsuarios()">Mostrar usuarios</button>
+
+    <div id="estadoDB"></div>
 </div>
 
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script src="app.js"></script>
+    <!-- SMS -->
+    <div class="card">
+        <h3><i class="fas fa-sms"></i> Enviar SMS</h3>
 
+        <input type="text" id="telefono" placeholder="Teléfono">
+        <input type="text" id="mensaje" placeholder="Mensaje">
+
+        <button onclick="enviarSMS()">Enviar</button>
+
+        <p id="estadoSMS"></p>
+    </div>
+
+    <!-- STREAMING -->
+    <div class="card">
+        <h3><i class="fas fa-play-circle"></i> Streaming</h3>
+
+        <iframe id="video"
+            width="100%"
+            height="200"
+            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            frameborder="0"
+            allowfullscreen>
+        </iframe>
+
+        <button onclick="cambiarVideo()">Cambiar Video</button>
+    </div>
+
+</div>
+
+<!-- SCRIPTS -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<!--  FIREBASE (IMPORTANTE) -->
+ 
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+<script src="app.js"></script>
 </body>
 </html>
