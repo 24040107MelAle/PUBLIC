@@ -112,3 +112,110 @@ function buscarProducto() {
                 "Error al cargar productos";
         });
 }
+// =======================
+// 4. BASE DE DATOS (Firebase)
+// =======================
+
+// 🔥 CONFIGURACIÓN (REEMPLAZA CON LA TUYA REAL DE FIREBASE)
+const firebaseConfig = {
+    apiKey: "AQUI_TU_API_KEY",
+    authDomain: "AQUI_TU_PROYECTO.firebaseapp.com",
+    databaseURL: "https://AQUI_TU_PROYECTO-default-rtdb.firebaseio.com/",
+    projectId: "AQUI_TU_PROYECTO",
+    storageBucket: "AQUI_TU_PROYECTO.appspot.com",
+    messagingSenderId: "AQUI_TU_ID",
+    appId: "AQUI_TU_APP_ID"
+};
+
+// INICIALIZAR FIREBASE
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+// =======================
+// GUARDAR USUARIO
+// =======================
+function guardarUsuario() {
+    let nombre = document.getElementById("nombreUsuario").value;
+    let correo = document.getElementById("correoUsuario").value;
+    let edad = document.getElementById("edadUsuario").value;
+
+    if (nombre.trim() === "" || correo.trim() === "" || edad.trim() === "") {
+        document.getElementById("estadoDB").innerText = "⚠️ Completa todos los campos";
+        return;
+    }
+
+    db.ref("usuarios").push({
+        nombre: nombre,
+        correo: correo,
+        edad: edad
+    })
+    .then(() => {
+        document.getElementById("estadoDB").innerText = "✅ Usuario guardado";
+
+        // limpiar campos
+        document.getElementById("nombreUsuario").value = "";
+        document.getElementById("correoUsuario").value = "";
+        document.getElementById("edadUsuario").value = "";
+    })
+    .catch(() => {
+        document.getElementById("estadoDB").innerText = "❌ Error al guardar";
+    });
+}
+
+// =======================
+// MOSTRAR USUARIOS
+// =======================
+function cargarUsuarios() {
+    const contenedor = document.getElementById("estadoDB");
+
+    contenedor.innerHTML = "⏳ Cargando...";
+
+    db.ref("usuarios").once("value")
+    .then((snapshot) => {
+        contenedor.innerHTML = "";
+
+        if (!snapshot.exists()) {
+            contenedor.innerHTML = "📭 No hay usuarios";
+            return;
+        }
+
+        snapshot.forEach((child) => {
+            const data = child.val();
+
+            contenedor.innerHTML += `
+                <p>👤 ${data.nombre}</p>
+            `;
+        });
+    })
+    .catch(() => {
+        contenedor.innerHTML = "❌ Error al cargar datos";
+    });
+}
+
+// =======================
+// 5. SMS (SIMULACIÓN)
+// =======================
+
+function enviarSMS() {
+    let tel = document.getElementById("telefono").value;
+    let msg = document.getElementById("mensaje").value;
+
+    if (tel === "" || msg === "") {
+        document.getElementById("estadoSMS").innerText = "Completa los campos ⚠️";
+        return;
+    }
+
+    document.getElementById("estadoSMS").innerText =
+        `Mensaje enviado a ${tel} 📩 (simulado)`;
+}
+
+// =======================
+// 6. STREAMING
+// =======================
+
+function cambiarVideo() {
+    const video = document.getElementById("video");
+
+    // Cambia entre videos
+    video.src = "https://www.youtube.com/embed/3JZ_D3ELwOQ";
+}
